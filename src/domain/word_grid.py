@@ -15,17 +15,23 @@ class WordGrid:
 
     def add_word(self, word: str, position: LetterPosition, direction: str) -> None:
         if direction == 'horizontal':
-            if position.x + len(word) > self.width:
-                raise ValueError("Word does not fit in the grid horizontally.")
-            for i, char in enumerate(word):
-                self.grid[position.y][position.x + i] = char
+            self._add_word_horizontal(word, position)
         elif direction == 'vertical':
-            if position.y + len(word) > self.height:
-                raise ValueError("Word does not fit in the grid vertically.")
-            for i, char in enumerate(word):
-                self.grid[position.y + i][position.x] = char
+            self._add_word_vertical(word, position)
         else:
             raise ValueError("Invalid direction. Use 'horizontal' or 'vertical'.")
+
+    def _add_word_horizontal(self, word: str, position: LetterPosition) -> None:
+        if position.x + len(word) > self.width:
+            raise ValueError("Word does not fit in the grid horizontally.")
+        for i, char in enumerate(word):
+            self.grid[position.y][position.x + i] = char
+
+    def _add_word_vertical(self, word: str, position: LetterPosition) -> None:
+        if position.y + len(word) > self.height:
+            raise ValueError("Word does not fit in the grid vertically.")
+        for i, char in enumerate(word):
+            self.grid[position.y + i][position.x] = char
 
     def generate_random_letters(self) -> None:
         for i in range(self.height):

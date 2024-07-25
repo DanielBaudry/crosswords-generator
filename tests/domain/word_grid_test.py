@@ -1,5 +1,5 @@
 import pytest
-from src.domain.word_grid import WordGrid
+from src.domain.word_grid import WordGrid, LetterPosition
 
 def test_init():
     # Given
@@ -19,7 +19,7 @@ def test_add_word_horizontal():
     # Given
     grid = WordGrid(5, 5)
     word = "hello"
-    position = (0, 0)
+    position = LetterPosition(0, 0)
     direction = "horizontal"
 
     # When
@@ -33,7 +33,7 @@ def test_add_word_vertical():
     # Given
     grid = WordGrid(5, 5)
     word = "world"
-    position = (0, 0)
+    position = LetterPosition(0, 0)
     direction = "vertical"
 
     # When
@@ -47,7 +47,7 @@ def test_add_word_invalid_direction():
     # Given
     grid = WordGrid(5, 5)
     word = "test"
-    position = (0, 0)
+    position = LetterPosition(0, 0)
     direction = "diagonal"
 
     # When
