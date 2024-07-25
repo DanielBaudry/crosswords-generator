@@ -2,23 +2,28 @@ import random
 import string
 from typing import List, Tuple
 
+class LetterPosition:
+    def __init__(self, x: int, y: int):
+        self.x = x
+        self.y = y
+
 class WordGrid:
     def __init__(self, width: int, height: int):
         self.width = width
         self.height = height
         self.grid: List[List[str]] = [['' for _ in range(width)] for _ in range(height)]
 
-    def add_word(self, word: str, position: Tuple[int, int], direction: str) -> None:
+    def add_word(self, word: str, position: LetterPosition, direction: str) -> None:
         if direction == 'horizontal':
-            if position[0] + len(word) > self.width:
+            if position.x + len(word) > self.width:
                 raise ValueError("Word does not fit in the grid horizontally.")
             for i, char in enumerate(word):
-                self.grid[position[1]][position[0] + i] = char
+                self.grid[position.y][position.x + i] = char
         elif direction == 'vertical':
-            if position[1] + len(word) > self.height:
+            if position.y + len(word) > self.height:
                 raise ValueError("Word does not fit in the grid vertically.")
             for i, char in enumerate(word):
-                self.grid[position[1] + i][position[0]] = char
+                self.grid[position.y + i][position.x] = char
         else:
             raise ValueError("Invalid direction. Use 'horizontal' or 'vertical'.")
 
