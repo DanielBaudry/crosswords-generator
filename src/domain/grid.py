@@ -6,3 +6,6 @@ class Grid:
     def generate_grid(self):
         return self.grid
 
+    def write_word(self, word, position, direction, reverse):
+        # Implementation of the write_word method
+        pass
