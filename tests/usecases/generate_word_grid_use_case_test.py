@@ -1,41 +1,39 @@
 import pytest
-
-from src.domain.word_grid import LetterPosition
+from unittest.mock import ANY
+from typing import List
+from src.domain.word_grid import LetterPosition, WordGrid
 from src.usecases.generate_word_grid_use_case import GenerateWordGridUseCase
 
 
-def given_generate_word_grid_use_case(width, height):
-    return GenerateWordGridUseCase(width, height)
-
-
-def when_generate_word_grid(use_case, words):
-    use_case.generate_word_grid(words)
-
-
-def then_word_grid_has_expected_dimensions(grid, expected_rows, expected_cols):
-    assert len(grid) == expected_rows
-    assert len(grid[0]) == expected_cols
-
-
-def then_words_are_added_to_grid_correctly(grid, expected_grid):
+def test_generate_word_grid_with_valid_input(generate_word_grid_use_case):
+    words = ["apple", "banana", "cherry"]
+    num_rows = 6
+    num_cols = 10
+    generate_word_grid_use_case.generate_word_grid(words, num_rows, num_cols)
+    grid = generate_word_grid_use_case.word_grid.get_grid()
+    assert len(grid) == num_rows
+    assert len(grid[0]) == num_cols
+    # Add an assert to check the expected output grid
+    expected_grid = [
+        ["a", "p", "p", "l", "e", ANY, ANY, ANY, ANY, ANY],
+        ["b", "a", "n", "a", "n", "a", ANY, ANY, ANY, ANY],
+        ["c", "h", "e", "r", "r", "y", ANY, ANY, ANY, ANY],
+        [ANY, ANY, ANY, ANY, ANY, ANY, ANY, ANY, ANY, ANY],
+        [ANY, ANY, ANY, ANY, ANY, ANY, ANY, ANY, ANY, ANY],
+        [ANY, ANY, ANY, ANY, ANY, ANY, ANY, ANY, ANY, ANY]
+    ]
     assert grid == expected_grid
 
 
-def test_generate_word_grid():
-    # Given
-    use_case = given_generate_word_grid_use_case(5, 5)
-    words = ["hello", "world", "python", "programming", "challenge"]
+def test_generate_word_grid_with_invalid_input(generate_word_grid_use_case):
+    words = ["apple", "banana", "cherry"]
+    num_rows = 2
+    num_cols = 5
+    with pytest.raises(ValueError):
+        generate_word_grid_use_case.generate_word_grid(
+            words, num_rows, num_cols)
 
-    # When
-    when_generate_word_grid(use_case, words)
 
-    # Then
-    then_word_grid_has_expected_dimensions(use_case.get_grid(), 5, 5)
-    expected_grid = [
-        ["hello", "worl", "pytho", "progr", "challe"],
-        ["d", "", "", "", ""],
-        ["", "", "", "", ""],
-        ["", "", "", "", ""],
-        ["", "", "", "", ""]
-    ]
-    then_words_are_added_to_grid_correctly(use_case.get_grid(), expected_grid)
+@pytest.fixture
+def generate_word_grid_use_case():
+    return GenerateWordGridUseCase(10, 10)

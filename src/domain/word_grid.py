@@ -2,16 +2,19 @@ import random
 import string
 from typing import List, Tuple
 
+
 class LetterPosition:
     def __init__(self, x: int, y: int):
         self.x = x
         self.y = y
 
+
 class WordGrid:
     def __init__(self, width: int, height: int):
         self.width = width
         self.height = height
-        self.grid: List[List[str]] = [['' for _ in range(width)] for _ in range(height)]
+        self.grid: List[List[str]] = [
+            ['' for _ in range(width)] for _ in range(height)]
 
     def add_word(self, word: str, position: LetterPosition, direction: str) -> None:
         if direction == 'horizontal':
@@ -19,7 +22,8 @@ class WordGrid:
         elif direction == 'vertical':
             self._add_word_vertical(word, position)
         else:
-            raise ValueError("Invalid direction. Use 'horizontal' or 'vertical'.")
+            raise ValueError(
+                "Invalid direction. Use 'horizontal' or 'vertical'.")
 
     def _add_word_horizontal(self, word: str, position: LetterPosition) -> None:
         if position.x + len(word) > self.width:

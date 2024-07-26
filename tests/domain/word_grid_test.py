@@ -1,6 +1,7 @@
 import pytest
 from src.domain.word_grid import WordGrid, LetterPosition
 
+
 def test_init():
     # Given
     width = 5
@@ -15,6 +16,7 @@ def test_init():
     assert len(grid.grid) == height
     assert len(grid.grid[0]) == width
 
+
 def test_add_word_horizontal():
     # Given
     grid = WordGrid(5, 5)
@@ -26,8 +28,15 @@ def test_add_word_horizontal():
     grid.add_word(word, position, direction)
 
     # Then
-    expected_grid = [['h', 'e', 'l', 'l', 'o'], ['', '', '', '', ''], ['', '', '', '', ''], ['', '', '', '', ''], ['', '', '', '', '']]
+    expected_grid = [
+        ['h', 'e', 'l', 'l', 'o'],
+        ['', '', '', '', ''],
+        ['', '', '', '', ''],
+        ['', '', '', '', ''],
+        ['', '', '', '', '']
+    ]
     assert grid.grid == expected_grid
+
 
 def test_add_word_vertical():
     # Given
@@ -40,8 +49,15 @@ def test_add_word_vertical():
     grid.add_word(word, position, direction)
 
     # Then
-    expected_grid = [['w', '', '', '', ''], ['o', '', '', '', ''], ['r', '', '', '', ''], ['l', '', '', '', ''], ['d', '', '', '', '']]
+    expected_grid = [
+        ['w', '', '', '', ''],
+        ['o', '', '', '', ''],
+        ['r', '', '', '', ''],
+        ['l', '', '', '', ''],
+        ['d', '', '', '', '']
+    ]
     assert grid.grid == expected_grid
+
 
 def test_add_word_invalid_direction():
     # Given
