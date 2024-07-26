@@ -1,3 +1,4 @@
+import pytest
 from src.domain.grid import Grid
 
 
@@ -24,8 +25,7 @@ def test_generate_grid_with_custom_size():
     ]
     assert generated_grid == expected_output
 
-
-def test_write_word():
+def test_write_word_horizontal_non_reverse_exception():
     # Given
     grid = Grid(5, 5)
     word = "hello"
@@ -34,14 +34,8 @@ def test_write_word():
     reverse = False
 
     # When
-    grid.write_word(word, position, direction, reverse)
+    with pytest.raises(ValueError) as e:
+        grid.write_word(word, position, direction, reverse)
 
     # Then
-    expected_output = [
-        ["", "", "", "", ""],
-        ["", "", "h", "e", ""],
-        ["", "", "l", "l", ""],
-        ["", "", "o", "", ""],
-        ["", "", "", "", ""],
-    ]
-    assert grid.grid == expected_output
+    assert str(e.value) == "Word 'hello' is too long to fit in the grid at position (2, 2) with horizontal direction and non-reverse way."
